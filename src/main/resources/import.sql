@@ -1,0 +1,13 @@
+INSERT INTO category (description) VALUES ('South Indian');
+INSERT INTO category (description) VALUES ('North Indian');
+INSERT INTO category (description) VALUES ('Gujrathi Indian');
+INSERT INTO category (description) VALUES ('Kerla Food');
+INSERT INTO category (description) VALUES ('Punjabi Food');
+INSERT INTO unit_of_measure (description) VALUES ('Teaspoon');
+INSERT INTO unit_of_measure (description) VALUES ('Tablespoon');
+INSERT INTO unit_of_measure (description) VALUES ('Cup');
+INSERT INTO unit_of_measure (description) VALUES ('Pinch');
+INSERT INTO unit_of_measure (description) VALUES ('Ounce');
+INSERT INTO unit_of_measure (description) VALUES ('Small');
+INSERT INTO unit_of_measure (description) VALUES ('Medium');
+INSERT INTO unit_of_measure (description) VALUES ('Each');
