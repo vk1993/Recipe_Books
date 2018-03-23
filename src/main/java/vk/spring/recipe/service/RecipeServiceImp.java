@@ -7,6 +7,7 @@ package vk.spring.recipe.service;
 
         import java.util.HashSet;
         import java.util.List;
+        import java.util.Optional;
         import java.util.Set;
 
 @Slf4j
@@ -26,5 +27,16 @@ public class RecipeServiceImp implements RecipeService{
         recipeRepositories.findAll().iterator().forEachRemaining(recipeList :: add);
         log.debug("Implimetation method of getRecipe and returing reipeLIST......");
         return recipeList;
+    }
+
+    @Override
+    public Recipe findById(Long l) {
+
+        Optional<Recipe> recipeOptional = recipeRepositories.findById(l);
+
+        if(!recipeOptional.isPresent()){
+          throw new RuntimeException("Recipe Not Found ...");
+        }
+        return recipeOptional.get();
     }
 }

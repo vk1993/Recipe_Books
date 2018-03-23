@@ -1,31 +1,29 @@
 package vk.spring.recipe.controller;
 
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import vk.spring.recipe.domain.Category;
-import vk.spring.recipe.domain.UnitOfMeasure;
-import vk.spring.recipe.repositories.CategoryRepositories;
-import vk.spring.recipe.repositories.UnitOfMeasureRepositories;
+import vk.spring.recipe.domain.Recipe;
 import vk.spring.recipe.service.RecipeService;
 
-import java.util.Optional;
-@Slf4j
+import javax.websocket.server.PathParam;
+
 @Controller
 public class RecipeController {
 
-    private RecipeService recipeService;
+    @Autowired
+   private final RecipeService recipeService;
 
-    public RecipeController(RecipeService recipeService) {
-        this.recipeService = recipeService;
-    }
+    public RecipeController(RecipeService recipeService){
+       this.recipeService = recipeService;
+   }
+    @RequestMapping("/recipe/show/{id}")
+    public String getRecipe( @PathVariable String id, Model model){
 
-    @RequestMapping({"","/","/index"})
-    public String getIndexPage(Model model){
-      model.addAttribute("recipes",recipeService.getRecipes());
-      model.addAttribute("page_title","Recipes");
-      log.debug("Adding Model Attribute and Sending view");
-         return "index";
+               model.addAttribute("recipe",recipeService.findById(new Long(id)));
+
+        return "recipe/show";
     }
 }

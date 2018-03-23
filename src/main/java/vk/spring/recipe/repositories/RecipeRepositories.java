@@ -7,7 +7,4 @@ import java.util.Optional;
 
 public interface RecipeRepositories extends CrudRepository<Recipe,Long> {
 
-
-
-
 }

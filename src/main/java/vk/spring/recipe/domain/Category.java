@@ -15,5 +15,4 @@ public class Category {
     private String description;
     @ManyToMany(mappedBy = "categories")
     private Set<Recipe> recipes;
-
 }

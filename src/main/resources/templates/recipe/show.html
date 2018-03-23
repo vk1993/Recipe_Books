@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}">
+
+    <title></title>
+    <style>
+        .desc {
+            border-bottom-right-radius: 6px;
+            border-bottom-left-radius: 6px;
+            background-color: dodgerblue;
+            color: white;
+            height: 50px;
+            padding-top: 10px;
+        }
+
+        .content {
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body style="background-color: aliceblue">
+<div class="container">
+    <div class="row">
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 desc">
+
+            <p class="font-weight-bold" th:text="${recipe.getDescription()}">
+                cool syttsus </p>
+        </div>
+        <!-- Force next columns to break to new line -->
+        <br>
+        <br>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+            <br>
+
+            <div class="d-flex justify-content-around">
+                <p class="font-weight-bold"> Catogorey</p>
+                <ol class="list-group list-group-flush col-sm-6">
+                    <li th:each="category:${recipe.categories}" th:text="${category.getDescription()}">Cras justo odio</li>
+                </ol>
+            </div>
+            <br>
+            <br>
+
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+            <table class="col-sm-12">
+                <tbody>
+                <tr>
+                    <th>Prepration Time</th>
+                    <td th:text="${(recipe.getPrepTime())+ ' mins'}">30</td>
+                    <th>Dificulty</th>
+                    <td th:text="${recipe.getDifficulty()}">easy</td>
+                </tr>
+                <tr>
+                    <th>Cook Time</th>
+                    <td th:text="${(recipe.getCookTime())+ ' mins'} ">30</td>
+                    <th>Serving</th>
+                    <td th:text="${(recipe.getServing())+ ' mins'}">easy</td>
+                </tr>
+                <tr>
+                    <th>Source</th>
+                    <td>30</td>
+                    <th>URL</th>
+                    <td> <a href="#" th:href="${recipe.getUrl()}" th:text="${recipe.getUrl()}">easy</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-4">
+            <div class="list-group" id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action active" id="list-Ingrdient-list" data-toggle="list" role="tab" aria-controls="Ingrdient" onclick="onactive(this.id)">Ingrdient</a>
+                <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"  role="tab" aria-controls="profile" onclick="onactive(this.id)">Directions</a>
+                <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" role="tab" aria-controls="messages" onclick="onactive(this.id)">Notes</a>
+
+            </div>
+            <script>
+                function onactive(id) {
+                    if(id =="list-Ingrdient-list") {
+                        if(document.getElementById(id).classList.contains("active")){
+                            console.log("odne");
+                        }else{
+                            document.getElementById(id).classList.add("active");
+                            document.getElementById("list-profile-list").classList.remove("active");
+                            document.getElementById("list-messages-list").classList.remove("active");
+
+                            document.getElementById("list-Ingrdient").style.display="block";
+                            document.getElementById("list-profile").style.display="none";
+                            document.getElementById("list-messages").style.display="none";
+                        }
+                    }else if(id == "list-profile-list") {
+                        if(document.getElementById(id).classList.contains("active")){
+                            console.log("done!!!");
+                        }else{
+                            document.getElementById(id).classList.add("active");
+                            document.getElementById("list-Ingrdient-list").classList.remove("active");
+                            document.getElementById("list-messages-list").classList.remove("active");
+
+                            document.getElementById("list-Ingrdient").style.display="none";
+                            document.getElementById("list-profile").style.display="block";
+                            document.getElementById("list-messages").style.display="none";
+                        }
+                    }else if(id =="list-messages-list"){
+                        if(document.getElementById(id).classList.contains("active")){
+                            console.log("done!!!");
+                        }else{
+                            document.getElementById(id).classList.add("active");
+                            document.getElementById("list-Ingrdient-list").classList.remove("active");
+                            document.getElementById("list-profile-list").classList.remove("active");
+
+                            document.getElementById("list-Ingrdient").style.display="none";
+                            document.getElementById("list-profile").style.display="none";
+                            document.getElementById("list-messages").style.display="block";
+                        }
+                    }
+                }
+            </script>
+        </div>
+        <div class="col-8">
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane show active" id="list-Ingrdient" role="tabpanel" aria-labelledby="list-Ingrdient-list">
+                    <ol class="list-group list-group-flush">
+                        <li class="list-group-item" th:each="ingredient:${recipe.ingredients}" th:text="${ingredient.getAmount().intValue()
+                        +' '+ ingredient.getUom().getDescription()
+                         +' - '+(ingredient.getDescription())}">Cras justo odio</li>
+                    </ol>
+                </div>
+                <div class="tab-pane" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+                    <p class="text-justify content" th:text="${recipe.getDirection()}">Ambitioni dedisse scripsisse iudicaretur. Cras mattis iudicium purus sit amet fermentum. Donec sed odio operae, eu vulputate felis rhoncus. Praeterea iter est quasdam res quas ex communi. At nos hinc posthac, sitientis piros Afros. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Cras mattis iudicium purus sit amet fermentum.</p>
+                </div>
+                <div class="tab-pane" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+
+                    <p class="text-justify content" th:text="${recipe.notes.getRecipeNotes()}">gsdrgAmbitioni dedisse scripsisse iudicaretur. Cras mattis iudicium purus sit amet fermentum. Donec sed odio operae, eu vulputate felis rhoncus. Praeterea iter est quasdam res quas ex communi. At nos hinc posthac, sitientis piros Afros. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Cras mattis iudicium purus sit amet fermentum.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous" th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous" th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.min.js}"></script>
+
+</body>
+
+</html>

@@ -20,7 +20,6 @@ public class Ingredient {
     private UnitOfMeasure uom;
     @ManyToOne
     private Recipe recipe;
-
     public Ingredient(){
         
     }
